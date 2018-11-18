@@ -10,14 +10,26 @@ buildscript {
 	}
 }
 
-apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.vertex'
-version = '0.0.1-SNAPSHOT'
+version = 'draft'
 sourceCompatibility = 1.8
+
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.vertex.wfextraction.WfextractionApplication'
+        )
+    }
+     from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+      }
+}
 
 repositories {
 	mavenCentral()
@@ -29,7 +41,8 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-jdbc')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	runtimeOnly('com.microsoft.sqlserver:mssql-jdbc')
-	compileOnly('org.projectlombok:lombok')
+	compileOnly 'org.projectlombok:lombok:1.16.20'
+//	compileOnly('org.projectlombok:lombok')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.batch:spring-batch-test')
 }
