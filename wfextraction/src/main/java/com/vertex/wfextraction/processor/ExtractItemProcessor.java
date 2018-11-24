@@ -2,15 +2,11 @@ package com.vertex.wfextraction.processor;
 
 import org.springframework.batch.item.ItemProcessor;
 
-import com.vertex.wfextraction.domain.Vertex;
-
-public class ExtractItemProcessor implements ItemProcessor<Vertex, Vertex> {
+public class ExtractItemProcessor implements ItemProcessor<String, String> {
 
 	@Override
-	public Vertex process(Vertex item) throws Exception {
-
-		System.out.println("Item values are " + item.getInputExtendedPrice() 
-		+ " " + item.getSourceId());
+	public String process(String item) throws Exception {
+		System.out.println("Item row is" + item);
 		return item;
 	}
 

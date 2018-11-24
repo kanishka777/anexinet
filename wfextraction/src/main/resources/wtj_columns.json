@@ -1,0 +1,4884 @@
+{
+  "columns": [
+    {
+      "name": "sourceName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["admin"],
+      "pattern": "source%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "SS.sourceName",
+      "encode": true
+    },
+    {
+      "name": "lineItemId",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["50107","50108","50109","50110","50112","50113","50114","50115","50117","50118"],
+      "uuid": true,
+      "repeatPct": 75,
+      "queryCol": "REF.lineItemId",
+      "encode": true
+    },
+    {
+      "name": "parentLineItemId",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 50,
+      "samples" : ["50107","50109","50112","50114","50117","50119","50122","50124","50127","50129"],
+      "uuid": true,
+      "repeatPct": 90,
+      "queryCol": "REF",
+      "encode": true
+    },
+    {
+      "name": "lineItemNumber",
+      "type": "Number",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "transactionId",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["50106","50111","50116","50121","50126","50131","50136","50141","50146","50151"],
+      "uuid": true,
+      "repeatPct": 90,
+      "queryCol": "REF",
+      "encode": true
+    },
+    {
+      "name": "userTransIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 90,
+      "uuid": true,
+      "queryCol": "REF",
+      "encode": true
+    },
+    {
+      "name": "transactionType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Sale"],
+      "options": ["Inventory Removal","Lease","Product Movement","Sale"],
+      "queryCol": "TRANSTYPE.transactionTypName"
+    },
+    {
+      "name": "transOrigType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 75,
+      "samples" : ["Invoice"],
+      "options": ["Evaluated receipts settlement","Invoice"],
+      "queryCol": "(CASE WHEN BUSTRANS.busTransTypeName='Evaluated Receipts Settlement' THEN 'Evaluated Receipts Settlement' WHEN BUSTRANS.busTransTypeName='Invoice' AND TRANSPER.partyRoleTypeName='Seller' THEN 'Invoice' WHEN BUSTRANS.busTransTypeName='Asset Movement' AND TRANSPER.partyRoleTypeName='Owner' THEN 'Invoice' ELSE null END)"
+    },
+    {
+      "name": "transSubType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 75,
+      "options": ["Input Tax","Self verification","Tax distribution"],
+      "queryCol": "(CASE WHEN BUSTRANS.busTransTypeName='Accrual' THEN 'Accrual' WHEN BUSTRANS.busTransTypeName='Invoice Verification' THEN 'Self Verification' WHEN BUSTRANS.busTransTypeName='Tax Distribution' THEN 'Tax Distribution' WHEN BUSTRANS.busTransTypeName='Tax Only Adjustment' THEN 'Tax Only Adjustment' WHEN BUSTRANS.busTransTypeName IN ('Buyer Input','Seller Import') THEN 'Input Tax' ELSE null END)"
+    },
+    {
+      "name": "transPerspective",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Seller"],
+      "options": ["Seller","Buyer","Owner"],
+      "queryCol": "TRANSPER.partyRoleTypeName"
+    },
+    {
+      "name": "transStatus",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Active"],
+      "options": ["Active:99","Inactive:1"],
+      "queryCol": "TRANSSTATUS.transStatusTypeName"
+    },
+    {
+      "name": "transSyncInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "transSyncSeqNum",
+      "type": "Number",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "transSyncIdCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 90,
+      "samples" : ["invoice.2.3"],
+      "pattern": "transSync%10d",
+      "random": true,
+      "queryCol": "REF",
+      "encode": true
+    },
+    {
+      "name": "lineItemSyncIdCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 90,
+      "samples" : ["Vertex freight sub line item identifier","orig-line-item-1","orig-line-item-2"],
+      "pattern": "liSync%10d",
+      "random": true,
+      "queryCol": "REF",
+      "encode": true
+    },
+    {
+      "name": "taxDate",
+      "type": "Date",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["20160601"],
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCol": "LI.taxDateRDBId"
+    },
+    {
+      "name": "postingDate",
+      "type": "Date",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["20180305"],
+      "options": ["0:95", "-1:3", "-2:1", "-3:1"],
+      "queryCol": "LI.postingDateRDBId"
+    },
+    {
+      "name": "transProcDate",
+      "type": "Date",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["20180305"],
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCol": "LI.transProcDateRDBId"
+    },
+    {
+      "name": "itemTypeCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 25,
+      "samples" : ["product code value"],
+      "pattern": "itemType%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "ITEMTYPE.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "itemTypeName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 50,
+      "pattern": "itemName%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "ITEMTYPEN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "itemClassCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 85,
+      "pattern": "itemClass%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "ITEMCLASS.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "itemClassName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "icn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "ITEMCLASSN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "usageTypeCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 85,
+      "pattern": "usageType%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "USAGETYPE.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "usageTypeName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "USAGETYPEN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "usageClassCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ucc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "USAGECLASS.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "usageClassName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ucn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "USAGECLASSN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "unitOfMeasISOCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 90,
+      "options" : ["Box","EA","ton"],
+      "queryCol": "REF"
+    },
+    {
+      "name": "userLocationCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "ul%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "REF.locationCode",
+      "encode": true
+    },
+    {
+      "name": "unitPrice",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 75,
+      "samples": ["1000.0"],
+      "minAmount": 1.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "extendedPrice",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["1000.0","35.0","90000.0"],
+      "minAmount": 1.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "inputExtendedPrice",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["1000.0","35.0","90000.0"],
+      "minAmount": 1.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "undiscountedPrice",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["1000.0","35.0","90000.0"],
+      "minAmount": 1.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "inputUndiscPrice",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 50,
+      "samples" : ["35.0"],
+      "minAmount": 1.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "itemQuantity",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["1.0"],
+      "minAmount": 1.0,
+      "maxAmount": 5.0,
+      "repeatPct": 81,
+      "queryCol": "LI"
+    },
+    {
+      "name": "componentInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "inputTotalTaxAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 85,
+      "minAmount": 1.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "freightChargeAmt",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0","35.0"],
+      "minAmount": 0.0,
+      "maxAmount": 100.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "chargedTaxAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate":  60,
+      "minAmount": 1.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI.chargedTaxAmount"
+    },
+    {
+      "name": "ovrdLocRoleType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "(CASE WHEN LI.ovrdLocRoleTypeId=1 THEN 'Destination' WHEN LI.ovrdLocRoleTypeId=2 THEN 'Physical Origin' WHEN LI.ovrdLocRoleTypeId=3 THEN 'Administrative Origin' WHEN LI.ovrdLocRoleTypeId=4 THEN 'Administrative Destination' ELSE null END)"
+    },
+    {
+      "name": "taxUnderThrshldInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "simplificationType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "SIMP.simpTypeName"
+    },
+    {
+      "name": "customsStatus",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "(CASE WHEN LI.customsStatusId=1 THEN 'Suspended to Suspended' WHEN LI.customsStatusId=2 THEN 'Free Circulation to Suspended' WHEN LI.customsStatusId=3 THEN 'Suspended to Free Circulation' WHEN LI.customsStatusId=4 THEN 'Free Circulation to Free Circulation' ELSE null END)"
+    },
+    {
+      "name": "movementMethod",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Regular"],
+      "queryCol": "(CASE WHEN LI.movementMethodId=1 THEN 'Consignment' WHEN LI.movementMethodId=2 THEN 'Call-Off' WHEN LI.movementMethodId=3 THEN 'Regular' ELSE 'Regular' END)"
+    },
+    {
+      "name": "basisType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Extended Amount"],
+      "queryCol": "BASISTYPE.basisTypeName"
+    },
+    {
+      "name": "landedCost",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 1.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI.landedCostAmount"
+    },
+    {
+      "name": "shippingTerms",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 69,
+      "options" : ["CFR","CIP","CUS","SUP"],
+      "queryCol": "SHIPTERM.shippingTermsName"
+    },
+    {
+      "name": "chainTransType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 92,
+      "options" : ["Final","Intermediary"],
+      "queryCol": "CHAIN.chainTransName"
+    },
+    {
+      "name": "titleTransfer",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 96,
+      "options" : ["Destination","In Transit"],
+      "queryCol": "TITLETRANS.titleTransferName"
+    },
+    {
+      "name": "lastUpdateDate",
+      "type": "Date",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["20180305"],
+      "minDate": -10,
+      "maxDate": 0,
+      "queryCol": "LI.transProcDateRDBId"
+    },
+    {
+      "name": "busTransType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Invoice"],
+      "options": ["Accrual","AssetMovement","Buyer Input","Evaluated Receipts Settlement","Inventory Removal","Invoice","Invoice Verification","Tax Distribution"],
+      "queryCol": "BUSTRANS.busTransTypeName"
+    },
+    {
+      "name": "currencyUnit",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["USD"],
+      "options": ["EUR","USD"],
+      "queryCol": "CURUNIT.isoAlpha3Code"
+    },
+    {
+      "name": "origCurrencyUnit",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["USD"],
+      "options": ["EUR","USD"],
+      "queryCol": "ORIGCURUNIT.isoAlpha3Code"
+    },
+    {
+      "name": "costCenterCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 85,
+      "pattern": "ccc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "COSTCENTER.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "costCenterName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "ccn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "COSTCENTERN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "departmentCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "dcc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "DEPARTMENT.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "departmentName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "dcn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "DEPARTMENTN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "genLdgrAcctCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "glac%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "GLACCT.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "genLdgrAcctName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "glan%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "GLACCTN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "materialCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "mc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "MATCODE.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "materialName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "mc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "MATCODEN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "projectCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "pc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "PROJECT.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "projectName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "pn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "PROJECTN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "vendorSKUCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "vsc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SKU.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "vendorSKUName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "vsn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SKUN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "commodityCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "cc%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "COMCODE.txbltyDvrCode",
+      "encode": true
+    },
+    {
+      "name": "commodityName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "cn%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "COMCODEN.txbltyDvrName",
+      "encode": true
+    },
+    {
+      "name": "commodityCodeType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 97,
+      "pattern": "cct%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "COMCODET.inputParamTypeName"
+    },
+    {
+      "name": "intrastatCmdtyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 97,
+      "pattern": "icc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "REF",
+      "encode": true
+    },
+    {
+      "name": "countryOfOrigin",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 96,
+      "samples" : ["ESP","FRA","USA","MEX"],
+      "queryCol": "REF"
+    },
+    {
+      "name": "modeOfTransport",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 97,
+      "pattern": "mot%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "REF"
+    },
+    {
+      "name": "natureOfTrans",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "netMassKilograms",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 97,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "weight",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 90,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "volume",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 90,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "strgFlxFld1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff1n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN1.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName1"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld1Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff1v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX1.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue1"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff2n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN2.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName2"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld2Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff2v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX2.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue2"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff3n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN3.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName3"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld3Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff3v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX3.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue3"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff4n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN4.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName4"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld4Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff4v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX4.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue4"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff5n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN5.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName5"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld5Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff5v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX5.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue5"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld6Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff6n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN6.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName6"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld6Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff6v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX6.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue6"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld7Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff7n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN7.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName7"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld7Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff7v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX7.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue7"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld8Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff8n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN8.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName8"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld8Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff8v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX8.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue8"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld9Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff9n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN9.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName9"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld9Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff9v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX9.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue9"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld10Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff10n%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN10.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName10"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld10Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 98,
+      "pattern": "sff10v%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX10.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue10"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld11Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN11.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName11"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld11Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX11.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue11"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld12Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN12.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName12"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld12Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX12.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue12"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld13Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN13.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName13"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld13Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX13.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue13"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld14Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN14.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName14"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld14Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX14.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue14"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld15Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "sffn%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN15.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName15"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld15Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "sffv%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX15.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue15"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld16Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN16.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName16"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld16Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX16.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue16"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld17Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN17.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName17"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld17Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX17.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue17"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld18Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN18.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName18"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld18Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX18.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue18"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld19Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN19.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName19"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld19Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX19.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue19"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld20Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN20.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName20"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld20Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX20.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue20"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld21Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN21.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName21"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld21Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX21.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue21"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld22Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN22.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName22"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld22Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX22.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue22"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld23Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN23.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName23"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld23Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX23.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue23"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld24Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN24.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName24"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld24Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX24.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue24"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld25Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLXN25.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldName25"
+        }],
+      "encode": true
+    },
+    {
+      "name": "strgFlxFld25Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "STRFLX25.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "STRFLX.flexFieldValue25"
+        }],
+      "encode": true
+    },
+    {
+      "name": "dateFlxFld1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "dffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLXN1.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldName1"
+        }],
+      "encode": true
+    },
+    {
+      "name": "dateFlxFld1Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 90,
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLX1.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldValue1"
+        }]
+    },
+    {
+      "name": "dateFlxFld2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "dffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLXN2.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldName2"
+        }],
+      "encode": true
+    },
+    {
+      "name": "dateFlxFld2Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 90,
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLX2.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldValue2"
+        }]
+    },
+    {
+      "name": "dateFlxFld3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLXN3.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldName3"
+        }],
+      "encode": true
+    },
+    {
+      "name": "dateFlxFld3Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLX3.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldValue3"
+        }]
+    },
+    {
+      "name": "dateFlxFld4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLXN4.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldName4"
+        }],
+      "encode": true
+    },
+    {
+      "name": "dateFlxFld4Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLX4.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldValue4"
+        }]
+    },
+    {
+      "name": "dateFlxFld5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLXN5.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldName5"
+        }],
+      "encode": true
+    },
+    {
+      "name": "dateFlxFld5Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "DATEFLX5.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "DATEFLX.flexFieldValue5"
+        }]
+    },
+    {
+      "name": "numFlxFld1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 70,
+      "pattern": "nffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN1.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName1"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld1Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 70,
+      "minAmount": -10000.0,
+      "maxAmount": 10000.0,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX1.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue1"
+        }]
+    },
+    {
+      "name": "numFlxFld2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "nffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN2.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName2"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld2Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 90,
+      "minAmount": -10000.0,
+      "maxAmount": 10000.0,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX2.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue2"
+        }]
+    },
+    {
+      "name": "numFlxFld3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "nffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN3.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName3"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld3Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX3.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue3"
+        }]
+    },
+    {
+      "name": "numFlxFld4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "nffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN4.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName4"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld4Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX4.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue4"
+        }]
+    },
+    {
+      "name": "numFlxFld5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "nffn%01d",
+      "minId": 1,
+      "maxId": 5,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN5.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName5"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld5Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX5.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue5"
+        }]
+    },
+    {
+      "name": "numFlxFld6Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN6.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName6"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld6Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX6.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue6"
+        }]
+    },
+    {
+      "name": "numFlxFld7Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN7.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName7"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld7Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX7.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue7"
+        }]
+    },
+    {
+      "name": "numFlxFld8Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN8.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName8"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld8Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX8.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue8"
+        }]
+    },
+    {
+      "name": "numFlxFld9Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN9.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName9"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld9Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX9.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue9"
+        }]
+    },
+    {
+      "name": "numFlxFld10Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLXN10.shortName"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldName10"
+        }],
+      "encode": true
+    },
+    {
+      "name": "numFlxFld10Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "NUMFLX10.flexFieldValue"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "NUMFLX.flexFieldValue10"
+        }]
+    },
+    {
+      "name": "discountCatName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 96,
+      "options" : ["General Discount"],
+      "queryCol": "DISCCAT"
+    },
+    {
+      "name": "discountCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 85,
+      "pattern": "dc%02d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "DISCDIM",
+      "encode": true
+    },
+    {
+      "name": "discountAmt",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "discountPct",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 100.0,
+      "repeatPct": 81,
+      "queryCol": "LI"
+    },
+    {
+      "name": "grossAmt",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["1000.0","35.0","90000.0"],
+      "minAmount": 0.0,
+      "maxAmount": 1000000.0,
+      "repeatPct": 51,
+      "queryCol": "LI.grossAmount"
+    },
+    {
+      "name": "inputCostAmt",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "lineItemAssistedState",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Not Assisted"],
+      "options" : ["Not Assisted","Post-Calculation Assisted","Pre-Calculation Assisted"],
+      "queryCol": "LIASSTSTATE.assistedStateName"
+    },
+    {
+      "name": "recovAmountDate",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "inpTaxCntryISOCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "INPTAXISOCTRY.standardName"
+    },
+    {
+      "name": "inpTaxRecOvrdPct",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 81,
+      "queryCol": "LI"
+    },
+    {
+      "name": "inpTaxImportInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "inpTaxAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "buyerName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 33,
+      "pattern": "buyer%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "BUYERPTY.partyName",
+      "encode": true
+    },
+    {
+      "name": "buyerExemptInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "buyerPartyType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 10,
+      "samples" : ["Customer"],
+      "options" : ["Customer","Taxpayer"],
+      "queryCol": "BUYERTYPE.partyTypeName"
+    },
+    {
+      "name": "buyrExmptCertCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "buyerECM%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "BUYER.exemptCertCode",
+      "encode": true
+    },
+    {
+      "name": "buyrPrimPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 25,
+      "pattern": "buyerParty%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "BUYER.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "buyrScndPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "buyer%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "BUYER.secondaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "buyrTrtryPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "buyer%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "BUYER.tertiaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "buyrPartyClassCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "buyerClass%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "BUYERCLS.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "buyerBusinessInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "BUYER.businessInd"
+    },
+    {
+      "name": "sellerName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 30,
+      "pattern": "seller%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SELLERPTY.partyName",
+      "encode": true
+    },
+    {
+      "name": "sellerExemptInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "sellerPartyType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 15,
+      "samples" : ["Taxpayer"],
+      "options" : ["Taxpayer","Vendor"],
+      "queryCol": "SELLERTYPE.partyTypeName"
+    },
+    {
+      "name": "selrExmptCertCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "SELLER.exemptCertCode",
+      "encode": true
+    },
+    {
+      "name": "selrPrimPartyCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 20,
+      "samples" : ["the company"],
+      "pattern": "sellerParty%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SELLER.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "selrScndPartyCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 80,
+      "samples" : ["the division"],
+      "pattern": "seller%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SELLER.secondaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "selrTrtryPartyCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 90,
+      "samples" : ["the department"],
+      "pattern": "seller%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SELLER.tertiaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "selrPartyClassCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "sellerClass%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "SELLERCLS.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "sellerBusinessInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "SELLER.businessInd"
+    },
+    {
+      "name": "ownerName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "owner%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "OWNERPTY.partyName",
+      "encode": true
+    },
+    {
+      "name": "ownerExemptInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "ownerPartyType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 90,
+      "options" : ["Taxpayer"],
+      "queryCol": "OWNERTYPE.partyTypeName"
+    },
+    {
+      "name": "ownrExmptCertCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "OWNER.exemptCertCode",
+      "encode": true
+    },
+    {
+      "name": "ownrPrimPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "ownerParty%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "OWNER.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "ownrScndPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "onwerParty%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "OWNER.secondaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "ownrTrtryPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "onwerParty%03d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "OWNER.tertiaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "ownrPartyClassCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "OWNERCLS.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "ownerBusinessInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "OWNER.businessInd"
+    },
+    {
+      "name": "recpPartyName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECPPTY.partyName",
+      "encode": true
+    },
+    {
+      "name": "recpExemptInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "recpPartyType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECPTYPE.partyTypeName"
+    },
+    {
+      "name": "recpExmptCertCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECP.exemptCertCode",
+      "encode": true
+    },
+    {
+      "name": "recpPrimPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECP.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "recpScndPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECP.secondaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "recpTrtryPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECP.tertiaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "recpPartyClassCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECPCLS.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "recpBusinessInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECP.businessInd"
+    },
+    {
+      "name": "dispPartyName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISPPTY.partyName",
+      "encode": true
+    },
+    {
+      "name": "dispExemptInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI"
+    },
+    {
+      "name": "dispPartyType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISPTYPE.partyTypeName"
+    },
+    {
+      "name": "dispExmptCertCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISP.exemptCertCode",
+      "encode": true
+    },
+    {
+      "name": "dispPrimPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISP.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "dispScndPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISP.secondaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "dispTrtryPartyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISP.tertiaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "dispPartyClassCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISPCLS.primaryPartyCode",
+      "encode": true
+    },
+    {
+      "name": "dispBusinessInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISP.businessInd"
+    },
+    {
+      "name": "reversalInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "weightUnitCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "volumeUnitCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "REF"
+    },
+    {
+      "name": "billedToDateAmt",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "exportProcedure",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ep%02d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "REF"
+    },
+    {
+      "name": "supplementaryUnit",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 90,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "REF"
+    },
+    {
+      "name": "supplementaryUnitType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 95,
+      "options": ["Length", "Weight", "Mass"],
+      "queryCol": "REF"
+    },
+    {
+      "name": "documentType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 93,
+      "options" : ["File","PAPER"],
+      "queryCol": "REF"
+    },
+    {
+      "name": "billingType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 93,
+      "options" : ["CASH","Home"],
+      "queryCol": "REF"
+    },
+    {
+      "name": "orderType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 93,
+      "options" : ["Delivery","INVOICE"],
+      "queryCol": "REF"
+    },
+    {
+      "name": "statisticalValue",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 98,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "LI"
+    },
+    {
+      "name": "statisticalValueCurrencyUnitName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 98,
+      "options" : ["US Dollar"],
+      "queryCol": "STATCUR.currencyUnitName"
+    },
+    {
+      "name": "documentSequenceIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI",
+      "encode": true
+    },
+    {
+      "name": "paymentDate",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 95,
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCol": "LI"
+    },
+    {
+      "name": "transProcTime",
+      "type": "Timestamp",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["2018-03-05 13:38:03","2018-03-05 13:39:15","2018-03-05 13:46:43","2018-03-05 13:46:44","2018-03-05 13:48:13","2018-03-05 13:48:14","2018-03-05 13:48:15","2018-03-05 13:48:16","2018-03-05 13:48:17","2018-03-05 13:48:18"],
+      "minDate": -100000,
+      "maxDate": -1000,
+      "queryCol": "LI"
+    },
+    {
+      "name": "taxPointDate",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "companyCodeCurrencyTaxableAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "LI",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "companyCodeCurrencyTaxAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "LI",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "companyCodeCurrencyUnit",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "CCCU.isoAlpha3Code",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "materialOriginCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "MATORG.txbltyDvrCode",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "materialOriginName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "MATORGN.txbltyDvrName",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "transForcedInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "LI",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "specialTaxBasis",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "LI",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "wageBasis",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "LI",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "totalTax",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["2.1","5402.1","62.1"],
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": null
+    },
+    {
+      "name": "totalCombinedRate",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.060000000000000005","0.06002333333333334","0.0621"],
+      "minAmount": 0.0,
+      "maxAmount": 5.0,
+      "repeatPct": 51,
+      "queryCol": null
+    },
+    {
+      "name": "financialEventType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["SUPPLIES"],
+      "options" : ["PROCUREMENT","SUPPLIES"],
+      "queryCol": "(CASE WHEN BUSTRANS.busTransTypeName='Invoice Verification' OR BUSTRANS.busTransTypeName='Self Verification' THEN 'PROCUREMENT' WHEN TRANSPER.partyRoleTypeName='Seller' THEN 'SUPPLIES' ELSE 'PROCUREMENT' END)"
+    },
+    {
+      "name": "taxpayerTaxOverThresholdAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 51,
+      "queryCol": "TAXPAYERPTY.taxOvrThresholdAmt"
+    },
+    {
+      "name": "taxpayerTaxOverThresholdPercent",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 81,
+      "queryCol": "TAXPAYERPTY.taxOvrThresholdPct"
+    },
+    {
+      "name": "taxpayerTaxUnderThresholdAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 51,
+      "queryCol": "TAXPAYERPTY.taxThresholdAmt"
+    },
+    {
+      "name": "taxpayerTaxUnderThresholdPercent",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 81,
+      "queryCol": "TAXPAYERPTY.taxThresholdPct"
+    },
+    {
+      "name": "vendorTaxOverThresholdAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 51,
+      "queryCol": "VENDORPTY.taxOvrThresholdAmt"
+    },
+    {
+      "name": "vendorTaxOverThresholdPercent",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 81,
+      "queryCol": "VENDORPTY.taxOvrThresholdPct"
+    },
+    {
+      "name": "vendorTaxUnderThresholdAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 51,
+      "queryCol": "VENDORPTY.taxThresholdAmt"
+    },
+    {
+      "name": "vendorTaxUnderThresholdPercent",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "repeatPct": 81,
+      "queryCol": "VENDORPTY.taxThresholdPct"
+    },
+    {
+      "name": "taxIncludedInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "d_taxAreaId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["390290000"],
+      "options" : ["100010000","10010000","10010870","210150230","310056464","390910000","430000000","430010000","440010000","50370000"],
+      "queryCol": "DEST.taxAreaId"
+    },
+    {
+      "name": "d_taxAreaCountry",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["UNITED STATES"],
+      "options" : ["BUSINGEN","FRANCE","GERMANY","UNITED STATES"],
+      "queryCol": "DESTTA.countryName"
+    },
+    {
+      "name": "d_taxAreaMainDivision",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 22,
+      "options" : ["ALABAMA","CALIFORNIA","FLORIDA","MARYLAND","NEW JERSEY","PENNSYLVANIA","TENNESSEE","TEXAS"],
+      "queryCol": "DESTTA.mainDivName"
+    },
+    {
+      "name": "d_taxAreaSubDivision",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 27,
+      "options" : ["ALACHUA","ANDERSON","AUTAUGA","BURLINGTON","CECIL","LOS ANGELES","MONTGOMERY"],
+      "queryCol": "DESTTA.subDivName"
+    },
+    {
+      "name": "d_taxAreaCity",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "options" : ["ELKTON","PRATTVILLE"],
+      "queryCol": "DESTTA.cityName"
+    },
+    {
+      "name": "d_taxAreaDistrict1",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 91,
+      "options" : ["BORDENTOWN TOWNSHIP","METROPOLITAN TRANSIT DISTRICT (LAMT)"],
+      "queryCol": "DESTJURD1.name"
+    },
+    {
+      "name": "d_taxAreaDistrict2",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 92,
+      "options" : ["TRANSACTIONS AND USE TAX (LAMA)"],
+      "queryCol": "DESTJURD2.name"
+    },
+    {
+      "name": "d_taxAreaDistrict3",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 92,
+      "options" : ["TRANSIT DISTRICT (LACT)"],
+      "queryCol": "DESTJURD3.name"
+    },
+    {
+      "name": "d_taxAreaDistrict4",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DESTJURD4.name"
+    },
+    {
+      "name": "d_streetInfoDesc",
+      "type": "Desc",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["1041 Old Cassatt Road"],
+      "queryCol": "DEST.streetInfoDesc",
+      "encode": true
+    },
+    {
+      "name": "d_streetInfo2Desc",
+      "type": "Desc",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DEST.streetInfo2Desc",
+      "encode": true
+    },
+    {
+      "name": "d_cityName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["Berwyn"],
+      "queryCol": "DEST.cityName"
+    },
+    {
+      "name": "d_subDivisionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["Chester"],
+      "queryCol": "DEST.subDivisionName"
+    },
+    {
+      "name": "d_mainDivisionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["PA"],
+      "queryCol": "DEST.mainDivisionName"
+    },
+    {
+      "name": "d_countryName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["USA"],
+      "queryCol": "DEST.countryName"
+    },
+    {
+      "name": "d_postalCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["19312"],
+      "queryCol": "DEST.postalCode"
+    },
+    {
+      "name": "d_locationCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "lc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "DEST.locationCode"
+    },
+    {
+      "name": "d_externalJurisdictionCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ejc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "DEST.externalJurisdictionCode"
+    },
+    {
+      "name": "po_taxAreaId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 51,
+      "options" : ["10014143","390910000","430010000","50370000","802500000","802500001","802760002","803720000"],
+      "queryCol": "PHYSORIG.taxAreaId"
+    },
+    {
+      "name": "po_taxAreaCountry",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 5,
+      "options" : ["BUSINGEN","FRANCE","IRELAND","UNITED STATES"],
+      "queryCol": "PHYSORIGTA.countryName"
+    },
+    {
+      "name": "po_taxAreaMainDivision",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 50,
+      "options" : ["ALABAMA","CALIFORNIA","PENNSYLVANIA","TENNESSEE"],
+      "queryCol": "PHYSORIGTA.mainDivName"
+    },
+    {
+      "name": "po_taxAreaSubDivision",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["CHESTER"],
+      "queryCol": "PHYSORIGTA.subDivName"
+    },
+    {
+      "name": "po_taxAreaCity",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "city%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "PHYSORIGTA.cityName"
+    },
+    {
+      "name": "po_taxAreaDistrict1",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "PHYSORIGJURD1.name"
+    },
+    {
+      "name": "po_taxAreaDistrict2",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "PHYSORIGJURD2.name"
+    },
+    {
+      "name": "po_taxAreaDistrict3",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "PHYSORIGJURD3.name"
+    },
+    {
+      "name": "po_taxAreaDistrict4",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "PHYSORIGJURD4.name"
+    },
+    {
+      "name": "po_streetInfoDesc",
+      "type": "Desc",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["1041 Old Cassatt Road"],
+      "queryCol": "PHYSORIG.streetInfoDesc",
+      "encode": true
+    },
+    {
+      "name": "po_streetInfo2Desc",
+      "type": "Desc",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "PHYSORIG.streetInfo2Desc",
+      "encode": true
+    },
+    {
+      "name": "po_cityName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["Berwyn"],
+      "queryCol": "PHYSORIG.cityName"
+    },
+    {
+      "name": "po_subDivisionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["Chester"],
+      "queryCol": "PHYSORIG.subDivisionName"
+    },
+    {
+      "name": "po_mainDivisionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["PA"],
+      "queryCol": "PHYSORIG.mainDivisionName"
+    },
+    {
+      "name": "po_countryName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["USA"],
+      "queryCol": "PHYSORIG.countryName"
+    },
+    {
+      "name": "po_postalCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["19312"],
+      "queryCol": "PHYSORIG.postalCode"
+    },
+    {
+      "name": "po_locationCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "lc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "PHYSORIG.locationCode"
+    },
+    {
+      "name": "po_externalJurisdictionCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ejc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "PHYSORIG.externalJurisdictionCode"
+    },
+    {
+      "name": "ao_taxAreaId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 50,
+      "options" : ["10010000","10010870","390910000","50370000","802500000"],
+      "queryCol": "ADMINORIG.taxAreaId"
+    },
+    {
+      "name": "ao_taxAreaCountry",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 50,
+      "samples" : ["UNITED STATES"],
+      "queryCol": "ADMINORIGTA.countryName"
+    },
+    {
+      "name": "ao_taxAreaMainDivision",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 80,
+      "samples" : ["PENNSYLVANIA"],
+      "queryCol": "ADMINORIGTA.mainDivName"
+    },
+    {
+      "name": "ao_taxAreaSubDivision",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 95,
+      "samples" : ["CHESTER"],
+      "queryCol": "ADMINORIGTA.subDivName"
+    },
+    {
+      "name": "ao_taxAreaCity",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "city%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINORIGTA.cityName"
+    },
+    {
+      "name": "ao_taxAreaDistrict1",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINORIGJURD1.name"
+    },
+    {
+      "name": "ao_taxAreaDistrict2",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINORIGJURD2.name"
+    },
+    {
+      "name": "ao_taxAreaDistrict3",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINORIGJURD3.name"
+    },
+    {
+      "name": "ao_taxAreaDistrict4",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINORIGJURD4.name"
+    },
+    {
+      "name": "ao_streetInfoDesc",
+      "type": "Desc",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["1041 Old Cassatt Road"],
+      "queryCol": "ADMINORIG.streetInfoDesc",
+      "encode": true
+    },
+    {
+      "name": "ao_streetInfo2Desc",
+      "type": "Desc",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINORIG.streetInfo2Desc",
+      "encode": true
+    },
+    {
+      "name": "ao_cityName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["Berwyn"],
+      "queryCol": "ADMINORIG.cityName"
+    },
+    {
+      "name": "ao_subDivisionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["Chester"],
+      "queryCol": "ADMINORIG.subDivisionName"
+    },
+    {
+      "name": "ao_mainDivisionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["PA"],
+      "queryCol": "ADMINORIG.mainDivisionName"
+    },
+    {
+      "name": "ao_countryName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["USA"],
+      "queryCol": "ADMINORIG.countryName"
+    },
+    {
+      "name": "ao_postalCode",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 98,
+      "samples" : ["19312"],
+      "queryCol": "ADMINORIG.postalCode"
+    },
+    {
+      "name": "ao_locationCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "lc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINORIG.locationCode"
+    },
+    {
+      "name": "ao_externalJurisdictionCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ejc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINORIG.externalJurisdictionCode"
+    },
+    {
+      "name": "ad_taxAreaId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 66,
+      "options" : ["10014143","390910000","430010000","50370000","802760000"],
+      "queryCol": "ADMINDEST.taxAreaId"
+    },
+    {
+      "name": "ad_taxAreaCountry",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "country%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDESTTA.countryName"
+    },
+    {
+      "name": "ad_taxAreaMainDivision",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "state%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDESTTA.mainDivName"
+    },
+    {
+      "name": "ad_taxAreaSubDivision",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "county%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDESTTA.subDivName"
+    },
+    {
+      "name": "ad_taxAreaCity",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "city%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDESTTA.cityName"
+    },
+    {
+      "name": "ad_taxAreaDistrict1",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINDESTJURD1.name"
+    },
+    {
+      "name": "ad_taxAreaDistrict2",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINDESTJURD2.name"
+    },
+    {
+      "name": "ad_taxAreaDistrict3",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINDESTJURD3.name"
+    },
+    {
+      "name": "ad_taxAreaDistrict4",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINDESTJURD4.name"
+    },
+    {
+      "name": "ad_streetInfoDesc",
+      "type": "Desc",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINDEST.streetInfoDesc",
+      "encode": true
+    },
+    {
+      "name": "ad_streetInfo2Desc",
+      "type": "Desc",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ADMINDEST.streetInfo2Desc",
+      "encode": true
+    },
+    {
+      "name": "ad_cityName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "city%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.cityName"
+    },
+    {
+      "name": "ad_subDivisionName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "county%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.subDivisionName"
+    },
+    {
+      "name": "ad_mainDivisionName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "state%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.mainDivisionName"
+    },
+    {
+      "name": "ad_countryName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "country%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.countryName"
+    },
+    {
+      "name": "ad_postalCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "pc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.postalCode"
+    },
+    {
+      "name": "ad_locationCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "lc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.locationCode"
+    },
+    {
+      "name": "ad_externalJurisdictionCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "ejc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "ADMINDEST.externalJurisdictionCode"
+    },
+    {
+      "name": "taxType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Sales"],
+      "options" : ["Consumer Use","None","Sales","VAT"],
+      "queryCol": "TAXTYPE.taxTypeName"
+    },
+    {
+      "name": "jurisdictionId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 1,
+      "options" : ["102864","11","12","15547","23018","2398","2872","2873","31152","34975"],
+      "queryCol": "TAX"
+    },
+    {
+      "name": "jurisdictionName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 0,
+      "options" : ["ALABAMA","ALACHUA","ANDERSON","AUTAUGA","CALIFORNIA","CORSICA","FLORIDA","FRANCE","GERMANY","IRELAND"],
+      "queryCol": "JUR.name"
+    },
+    {
+      "name": "jurisdictionType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "options" : ["City","Country","County","District","State","Territory"],
+      "queryCol": "JURTYPE.jurTypeName"
+    },
+    {
+      "name": "taxImpsnSourceId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "(CASE WHEN TAX.taxImpsnSrcId > 0 THEN TAX.taxImpsnSrcId ELSE null END)",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "taxImpsnName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 4,
+      "options" : ["Federal Excise Tax","Local Sales and Use Tax","Local Sales and Use Tax (Discretionary Sales Surtax)","Sales and Use Tax","State Single Article Tax","VAT"],
+      "queryCol": "IMP"
+    },
+    {
+      "name": "taxImpsnTypeName",
+      "type": "Name",
+      "nullable": false,
+      "nullRate": 4,
+      "options" : ["Additional Sales and Use Tax","Federal Excise Tax - Telecom","General Sales and Use Tax","VAT"],
+      "queryCol": "IMPTYPE.impsnTypeName"
+    },
+    {
+      "name": "taxRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "%d",
+      "minId": 1,
+      "maxId": 100000,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "taxRuleId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 40,
+      "samples" : ["17423","452200"],
+      "pattern": "%d",
+      "minId": 1,
+      "maxId": 100000,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "taxResultType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Nontaxable","Taxable"],
+      "options" : ["Exempt","No Tax","Nontaxable","Taxable"],
+      "queryCol": "TAXRESULT.taxResultTypeName"
+    },
+    {
+      "name": "limitedByMaxTaxInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "maxTaxRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "maxTaxRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "%d",
+      "minId": 1,
+      "maxId": 100000,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "adjTaxAmountInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX.adjustedTaxAmtInd"
+    },
+    {
+      "name": "directInputInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "overrideRate",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 98,
+      "minAmount": 0.0,
+      "maxAmount": 25.0,
+      "repeatPct": 81,
+      "queryCol": "(CASE WHEN TAX.overrideRateInd=1 THEN TAX.taxRate ELSE null END)"
+    },
+    {
+      "name": "situsTaxAreaId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["390290000"],
+      "options" : ["100010000","10010000","10010870","210150230","310056464","390910000","430000000","430010000","440010000","50370000"],
+      "queryCol": "TAX"
+    },
+    {
+      "name": "situsLocRoleType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Administrative Origin"],
+      "options" : ["Administrative Origin","Destination","Physical Origin"],
+      "queryCol": "(CASE WHEN TAX.situsLocRoleTypeId=1 THEN 'DESTINATION' WHEN TAX.situsLocRoleTypeId=2 THEN 'PHYSICAL_ORIGIN' WHEN TAX.situsLocRoleTypeId=3 THEN 'ADMINISTRATIVE_ORIGIN' WHEN TAX.situsLocRoleTypeId=4 THEN 'ADMINISTRATIVE_DESTINATION' ELSE null END)"
+    },
+    {
+      "name": "noRegInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX.noRegistrationInd"
+    },
+    {
+      "name": "jurOvrdTypeId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX.jurOverrideTypeId"
+    },
+    {
+      "name": "basisRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "%d",
+      "minId": 1,
+      "maxId": 10,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "basisRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "%d",
+      "minId": 1,
+      "maxId": 100000,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "inputOutputType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 76,
+      "options" : ["IMPORT","INPUT","INPUT_OUTPUT","OUTPUT"],
+      "queryCol": "(CASE WHEN IOTYPE.inputOutputTypeId=1 THEN 'INPUT' WHEN IOTYPE.inputOutputTypeId=2 THEN 'OUTPUT' WHEN IOTYPE.inputOutputTypeId=3 THEN 'INPUT_OUTPUT' WHEN IOTYPE.inputOutputTypeId=4 THEN 'IMPORT' ELSE null END)"
+    },
+    {
+      "name": "inpTaxRecAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "inpTaxRecAmtReportedInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "inpTaxNonRecAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "inpTaxRecPct",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 20.0,
+      "repeatPct": 81,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "inpTaxRecOvrdPctTaxDtl",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 97,
+      "minAmount": 0.0,
+      "maxAmount": 10.0,
+      "repeatPct": 51,
+      "queryCol": "TAX.inpTaxRecOvdPct"
+    },
+    {
+      "name": "byrInputTaxAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "byrInpTaxRcdPct",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 97,
+      "minAmount": 0.0,
+      "maxAmount": 2.0,
+      "repeatPct": 81,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "cvtRateUsed",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 85,
+      "minAmount": 0.0,
+      "maxAmount": 35.0,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "filingCurcyUnitId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 85,
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "FILECURUNIT.currencyUnitId"
+    },
+    {
+      "name": "filingCurcyUnit",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 85,
+      "options" : ["EUR","GBP","USD"],
+      "queryCol": "FILECURUNIT.isoAlpha3Code"
+    },
+    {
+      "name": "filingUnRecAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "filingRecAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 93,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "lineItemTaxAssistedState",
+      "type": "Code",
+      "nullable": false,
+      "nullRate": 0,
+      "options" : ["Post-Calculation Assisted:90", "Not Assisted:10"],
+      "queryCol": "TAXASSTSTATE.assistedStateName"
+    },
+    {
+      "name": "serviceInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "taxCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "outputNotice1Id",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 85,
+      "minId": 1,
+      "maxId": 99,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "ONOTICE1.outputNoticeId"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "ONOTICE.outputNotice1Id"
+        }]
+    },
+    {
+      "name": "outputNotice2Id",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 90,
+      "minId": 1,
+      "maxId": 99,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "ONOTICE2.outputNoticeId"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "ONOTICE.outputNotice2Id"
+        }]
+    },
+    {
+      "name": "outputNotice3Id",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 95,
+      "minId": 1,
+      "maxId": 99,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "ONOTICE3.outputNoticeId"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "ONOTICE.outputNotice3Id"
+        }]
+    },
+    {
+      "name": "outputNotice4Id",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "ONOTICE4.outputNoticeId"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "ONOTICE.outputNotice4Id"
+        }]
+    },
+    {
+      "name": "outputNotice5Id",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCols": [
+        {
+          "oVersion": "7.0",
+          "column": "ONOTICE5.outputNoticeId"
+        },
+        {
+          "oVersion": "8.0",
+          "column": "ONOTICE.outputNotice5Id"
+        }]
+    },
+    {
+      "name": "outputNoticeName1",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ONOTICEN1.outputNoticeName",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "outputNoticeName2",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ONOTICEN2.outputNoticeName",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "outputNoticeName3",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ONOTICEN3.outputNoticeName",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "outputNoticeName4",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ONOTICEN4.outputNoticeName",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "outputNoticeName5",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "ONOTICEN5.outputNoticeName",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "negTaxInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "vertexTaxCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "options" : ["BGCR","BGIR","IGX","MGX","OGI"],
+      "queryCol": "TAX"
+    },
+    {
+      "name": "apportionmentType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 90,
+      "samples" : ["Trigger"],
+      "queryCol": "APPTYPE.apportionTypeName"
+    },
+    {
+      "name": "certificateIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "cert%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCol": "CERT",
+      "encode": true
+    },
+    {
+      "name": "certClassType",
+      "type": "Type",
+      "nullable": true,
+      "nullRate": 85,
+      "samples" : ["Exemption Certificate"],
+      "queryCol": "CERTTYPE.certClassTypeName"
+    },
+    {
+      "name": "taxResponsibilityRoleType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 50,
+      "samples" : ["Buyer"],
+      "queryCol": "TAXRESPROLETYPE.partyRoleTypeName"
+    },
+    {
+      "name": "buyrRegIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "bric%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCol": "BUYERREG.registrationIdCode",
+      "encode": true
+    },
+    {
+      "name": "selrRegIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 80,
+      "pattern": "sric%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCol": "SELLERREG.registrationIdCode",
+      "encode": true
+    },
+    {
+      "name": "ownrRegIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "oric%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCol": "OWNERREG.registrationIdCode",
+      "encode": true
+    },
+    {
+      "name": "recpRegIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECPREG.registrationIdCode",
+      "encode": true
+    },
+    {
+      "name": "dispRegIdCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISPREG.registrationIdCode",
+      "encode": true
+    },
+    {
+      "name": "buyerRegCountryISO2Code",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 35,
+      "options" : ["DE","FR","US"],
+      "queryCol": "BUYERREG.regCountryISO2Code"
+    },
+    {
+      "name": "sellerRegCountryISO2Code",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 29,
+      "options" : ["FR","IE","US"],
+      "queryCol": "SELLERREG.regCountryISO2Code"
+    },
+    {
+      "name": "ownerRegCountryISO2Code",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 92,
+      "options" : ["US"],
+      "queryCol": "OWNERREG.regCountryISO2Code"
+    },
+    {
+      "name": "recpRegCountryISO2Code",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 97,
+      "options" : ["US"],
+      "queryCol": "RECPREG.regCountryISO2Code"
+    },
+    {
+      "name": "dispRegCountryISO2Code",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 92,
+      "options" : ["US"],
+      "queryCol": "DISPREG.regCountryISO2Code"
+    },
+    {
+      "name": "buyerPhysicalPresInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "BUYERREG.physicalPresInd"
+    },
+    {
+      "name": "sellerPhysicalPresInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "SELLERREG.physicalPresInd"
+    },
+    {
+      "name": "ownerPhysicalPresInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "OWNERREG.physicalPresInd"
+    },
+    {
+      "name": "recpPhysicalPresInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "RECPREG.physicalPresInd"
+    },
+    {
+      "name": "dispPhysicalPresInd",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "DISPREG.physicalPresInd"
+    },
+    {
+      "name": "inpTaxBlockingRecPct",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 15.0,
+      "repeatPct": 81,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "inpTaxPartialExemptRecPct",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 15.0,
+      "repeatPct": 81,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "recoverabilityRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "recoverabilityRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "invoiceTextRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "invoiceTextRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "summaryInvoiceText",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxInclusionRuleId",
+      "type": "Id",
+      "nullable": false,
+      "nullRate": 50,
+      "samples" : ["1282739"],
+      "minId": 1,
+      "maxId": 99999,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxInclusionRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxRuleCvtRateUsed",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "maxRuleCvtRateUsed",
+      "type": "Percent",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxCreditRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxCreditRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "basisApportionmentRuleSrcId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "basisApportionmentRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxRateAdjustmentRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxRateAdjustmentRuleSourceId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxApportionmentRuleId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "taxApportionmentRuleSourceId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "detailType",
+      "type": "Type",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["Calculation"],
+      "queryCol": "TAXDETTYPE.lineItemTxDtlTypNm"
+    },
+    {
+      "name": "taxStrucSourceId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX.taxStructureSrcId",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "taxStrucId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX.taxStructureId",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "taxStrucElementNumber",
+      "type": "Number",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": "TAX.taxStrucElementNum",
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "dedReasonCatId",
+      "type": "Id",
+      "nullable": true,
+      "nullRate": 95,
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "(CASE WHEN REASONCAT.reasonCategoryId>0 THEN REASONCAT.reasonCategoryId ELSE null END)"
+    },
+    {
+      "name": "dedReasonCatName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "dedCat%3d",
+      "minId": 1,
+      "maxId": 999,
+      "queryCol": "REASONCAT.reasonCategoryName"
+    },
+    {
+      "name": "filingCategoryCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "fcc%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "FILECAT.filingCategoryCode"
+    },
+    {
+      "name": "filingCategoryName",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "pattern": "fcn%03d",
+      "minId": 1,
+      "maxId": 99,
+      "queryCol": "FILECAT.filingCategoryName"
+    },
+    {
+      "name": "taxAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 35,
+      "samples" : ["2.1","5400.0","60.0"],
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "taxableAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 35,
+      "samples" : ["1000.0","35.0","90000.0"],
+      "minAmount": 0.0,
+      "maxAmount": 1000000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "nontaxableAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 90,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "exemptAmount",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 80,
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "taxRate",
+      "type": "Percent",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.06"],
+      "minAmount": 0.0,
+      "maxAmount": 20.0,
+      "repeatPct": 81,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "basisAmount",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0","1000.0","35.0","90000.0"],
+      "minAmount": 0.0,
+      "maxAmount": 1000000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "filingTaxableAmount",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 90,
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX.filingTxbleAmt"
+    },
+    {
+      "name": "filingExemptAmount",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 98,
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX.filingExmptAmt"
+    },
+    {
+      "name": "filingNontaxableAmount",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "repeatPct": 51,
+      "queryCol": "TAX.filingNontxAmt"
+    },
+    {
+      "name": "filingTaxAmt",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 92,
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX"
+    },
+    {
+      "name": "filingBasisAmount",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 88,
+      "minAmount": 0.0,
+      "maxAmount": 100000.0,
+      "repeatPct": 51,
+      "queryCol": "TAX.filingBasisAmt"
+    },
+    {
+      "name": "rateClassification",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 65,
+      "options" : ["Exempt","Standard Rate","User Defined","Zero Rate"],
+      "queryCol": "RATECLASS.rateClassName"
+    },
+    {
+      "name": "taxAmountBeforeCredit",
+      "type": "Amount",
+      "nullable": false,
+      "nullRate": 0,
+      "samples" : ["0.0"],
+      "minAmount": 0.0,
+      "maxAmount": 0.0,
+      "queryCol": "TAX.taxAmtBeforeCredit",
+      "oVersion": "8.0"
+    },
+    {
+      "name": "returnsCodeField1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "rcf%1d",
+      "minId": 1,
+      "maxId": 9,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField1Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "rcfv%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "rcf%1d",
+      "minId": 1,
+      "maxId": 9,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField2Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "rcfv%04d",
+      "minId": 1,
+      "maxId": 9999,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField3Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField4Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsCodeField5Value",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "rvf%1d",
+      "minId": 1,
+      "maxId": 9,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField1Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 90,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "rvf%1d",
+      "minId": 1,
+      "maxId": 9,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField2Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 95,
+      "minAmount": 0.0,
+      "maxAmount": 1000.0,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField3Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField4Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsNumericField5Value",
+      "type": "Amount",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 90,
+      "pattern": "rdf%1d",
+      "minId": 1,
+      "maxId": 9,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField1Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 90,
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 95,
+      "pattern": "rdf%1d",
+      "minId": 1,
+      "maxId": 9,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField2Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 95,
+      "minDate": -10,
+      "maxDate": 1,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField3Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField4Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsDateField5Value",
+      "type": "Date",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField1Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField1Value",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField2Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField2Value",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField3Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField3Value",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField4Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField4Value",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField5Name",
+      "type": "Name",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "returnsIndicatorField5Value",
+      "type": "Boolean",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null
+    },
+    {
+      "name": "filingCompanyCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null,
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "filingDivisionCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null,
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "filingDepartmentCode",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null,
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    },
+    {
+      "name": "filingLevel",
+      "type": "Code",
+      "nullable": true,
+      "nullRate": 100,
+      "queryCol": null,
+      "wtjVersion": "8.1",
+      "notes": "Added late in 8.0 development for HVR"
+    }
+  ]
+}
